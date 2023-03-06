@@ -28,44 +28,44 @@ This project is licensed under the ${license} license.`;
 }
 
 // TODO: Create a function to generate markdown for README
-function generateMarkdown(data) {
-  return `# ${data.projectName}
+function generateMarkdown(answers) {
+  return `# ${answers.projectName}
 
-${renderLicenseBadge(data.license)}
+${renderLicenseBadge(answers.license)}
 
 ## Description
 
-${data.description}
+${answers.description}
 
 ## Table of Contents
 
 * [Installation](#installation)
 * [Usage](#usage)
-${renderLicenseLink(data.license)}* [Contributing](#contributing)
+${renderLicenseLink(answers.license)}* [Contributing](#contributing)
 * [Tests](#tests)
 * [Questions](#questions)
 
 ## Installation
 
-${data.installation}
+${answers.installation}
 
 ## Usage
 
-${data.usage}
+${answers.usage}
 
-${renderLicenseSection(data.license)}
+${renderLicenseSection(answers.license)}
 
 ## Contributing
 
-${data.contributing}
+${answers.contributing}
 
 ## Tests
 
-${data.tests}
+${answers.tests}
 
 ## Questions
 
-If you have any questions about the repo, please open an issue or contact me directly at ${data.email}. You can find more of my work at ${data.githubUsername}.`;
+If you have any questions about the repo, please open an issue or contact me directly at ${answers.email}. You can find more of my work at ${answers.githubUsername}.`;
 }
 
 module.exports = generateMarkdown;

@@ -2,6 +2,7 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
 const util = require('util');
+const generateMarkdown = require('./utils/generateMarkdown.js');
 
 // TODO: Create an array of questions for user input
 const questions = [
@@ -101,7 +102,7 @@ async function init() {
   - GitHub: [${answers.githubUsername}](https://github.com/${answers.githubUsername})
   - Email: [${answers.email}](mailto:${answers.email})`;
   
-      await writeToFile('README.md', template);
+      await writeToFile('README.md', generateMarkdown(answers));
     } catch (error) {
       console.error(error);
     }
