@@ -68,4 +68,4 @@ ${answers.tests}
 If you have any questions about the repo, please open an issue or contact me directly at ${answers.email}. You can find more of my work at ${answers.githubUsername}.`;
 }
 
-module.exports = generateMarkdown;
+module.exports = { generateMarkdown, renderLicenseBadge, renderLicenseLink, renderLicenseSection };

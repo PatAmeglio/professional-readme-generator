@@ -2,7 +2,7 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
 const util = require('util');
-const generateMarkdown = require('./utils/generateMarkdown.js');
+const { generateMarkdown, renderLicenseBadge, renderLicenseLink, renderLicenseSection } = require('./utils/generateMarkdown');
 
 // TODO: Create an array of questions for user input
 const questions = [
@@ -62,51 +62,53 @@ async function writeToFile(fileName, data) {
 
 // TODO: Create a function to initialize app
 async function init() {
-    try {
-      const answers = await inquirer.prompt(questions);
-      console.log(answers);
-  
-      const template = `# ${answers.projectName}
-  
-  ## Description
-  ${answers.description}
-  
-  ## Table of Contents
-  - [Installation](#installation)
-  - [Usage](#usage)
-  - [Contributing](#contributing)
-  - [Tests](#tests)
-  - [License](#license)
-  - [Questions](#questions)
-  
-  ## Installation
-  ${answers.installation}
-  
-  ## Usage
-  ${answers.usage}
-  
-  ## Contributing
-  ${answers.contributing}
-  
-  ## Tests
-  ${answers.tests}
-  
-  ## License
-  ![${answers.license} license](https://img.shields.io/badge/license-${encodeURIComponent(answers.license)}-blue.svg)
-  
-  This project is covered under the ${answers.license} license.
-  
-  ## Questions
-  If you have any questions, please contact me using the following information:
-  
-  - GitHub: [${answers.githubUsername}](https://github.com/${answers.githubUsername})
-  - Email: [${answers.email}](mailto:${answers.email})`;
-  
-      await writeToFile('README.md', generateMarkdown(answers));
-    } catch (error) {
-      console.error(error);
-    }
+  try {
+    const answers = await inquirer.prompt(questions);
+    console.log(answers);
+
+    const template = `# ${answers.projectName}
+
+${renderLicenseBadge(answers.license)}
+
+## Description
+
+${answers.description}
+
+## Table of Contents
+
+* [Installation](#installation)
+* [Usage](#usage)
+${renderLicenseLink(answers.license)}* [Contributing](#contributing)
+* [Tests](#tests)
+* [Questions](#questions)
+
+## Installation
+
+${answers.installation}
+
+## Usage
+
+${answers.usage}
+
+${renderLicenseSection(answers.license)}
+
+## Contributing
+
+${answers.contributing}
+
+## Tests
+
+${answers.tests}
+
+## Questions
+
+If you have any questions about the repo, please open an issue or contact me directly at ${answers.email}. You can find more of my work at ${answers.githubUsername}.`;
+
+    await writeToFile('README.md', template);
+  } catch (error) {
+    console.error(error);
   }
+}
   
 
 // Function call to initialize app
